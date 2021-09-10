@@ -1,3 +1,4 @@
+var editId = null;
 var value = [
   {
     address: "Ludhiana",
@@ -21,14 +22,16 @@ var value = [
     lname: "Kumar",
   },
 ];
+
 // On Load Function for static data
-function loadList(id) {
+function loadList() {
   value.forEach((item) => {
     var newElement = document.createElement("li");
+    newElement.setAttribute("style", "border:1px solid");
 
     var divEle = document.createElement("div");
-    divEle.setAttribute("style", "border:1px solid");
-    var dataSpan = document.createElement("span");
+
+    divEle.setAttribute("id", "0");
     divEle.innerHTML =
       "Firstname-" +
       item.fname +
@@ -47,69 +50,73 @@ function loadList(id) {
     editbutton.addEventListener("click", function () {
       editList(item.id);
     });
-    //editbutton.addEventListener("click", add);
-    // editbutton.setAttribute('onClick')
     let deletebutton = document.createElement("button");
     deletebutton.innerText = "Delete";
     deletebutton.addEventListener("click", function () {
       deleteList(item.id);
     });
-    divEle.appendChild(editbutton);
-    divEle.appendChild(deletebutton);
-    dataSpan.appendChild(divEle);
-    newElement.appendChild(dataSpan);
+    newElement.appendChild(divEle);
+    newElement.appendChild(editbutton);
+    newElement.appendChild(deletebutton);
     document.getElementById("list").appendChild(newElement);
   });
 }
-// Add function for Input Data to List Item.
-var selectedList = null;
 
-function add(id) {
+// Add function for Input Data to List Item.
+function add() {
   const b = {};
   b["fname"] = document.getElementById("fname").value;
   b["lname"] = document.getElementById("lname").value;
   b["age"] = document.getElementById("age").value;
   b["address"] = document.getElementById("address").value;
-  b.id = value.length + 1;
 
-  value.push(b);
-  console.log(value);
+  if (editId) {
+    let index = value.findIndex((el) => el.id == editId);
+    console.log(index);
+    value[index].fname = "Fname";
+  } else {
+    b.id = value.length + 1;
 
-  var newElement = document.createElement("li");
-  var divEle = document.createElement("div");
-  divEle.setAttribute("style", "border:1px solid");
+    value.push(b);
+    console.log(value);
 
-  divEle.innerHTML =
-    "Firstname-" +
-    b.fname +
-    "<br>" +
-    "Lastname-" +
-    b.lname +
-    "<br>" +
-    "Age-" +
-    b.age +
-    "<br>" +
-    "Address-" +
-    b.address +
-    "<br>";
-  //"<br><button onClick=editList()>Edit</button><button onClick=deleteList("+ b.id +")>delete</button>";
-  let editbutton = document.createElement("button");
-  editbutton.innerText = "Edit";
-  editbutton.addEventListener("click", function () {
-    editList(b.id);
-  });
+    var newElement = document.createElement("li");
+    newElement.setAttribute("style", "border:1px solid");
+    var divEle = document.createElement("div");
+    divEle.innerHTML =
+      "Firstname-" +
+      b.fname +
+      "<br>" +
+      "Lastname-" +
+      b.lname +
+      "<br>" +
+      "Age-" +
+      b.age +
+      "<br>" +
+      "Address-" +
+      b.address +
+      "<br>";
 
-  let deletebutton = document.createElement("button");
-  deletebutton.innerText = "Delete";
-  deletebutton.addEventListener("click", function () {
-    deleteList(b.id);
-  });
+    let editbutton = document.createElement("button");
+    editbutton.innerText = "Edit";
+    editbutton.addEventListener("click", function () {
+      editList(b.id);
+    });
 
-  divEle.appendChild(editbutton);
-  divEle.appendChild(deletebutton);
-  newElement.appendChild(divEle);
-  document.getElementById("list").appendChild(newElement);
+    let deletebutton = document.createElement("button");
+    deletebutton.innerText = "Delete";
+    deletebutton.addEventListener("click", function () {
+      deleteList(b.id);
+    });
+
+    newElement.appendChild(divEle);
+    newElement.appendChild(editbutton);
+    newElement.appendChild(deletebutton);
+    document.getElementById("list").appendChild(newElement);
+  }
+  document.getElementById("form1").reset();
 }
+
 //Delete function
 function deleteList(id) {
   let index = value.findIndex((el) => el.id == id);
@@ -118,21 +125,25 @@ function deleteList(id) {
   var delList = document.getElementById("list");
   delList.removeChild(delList.childNodes[index]);
 }
+
 // Edit Function
 var selectedListItem = null;
+
 function editList(id) {
   let index = value.findIndex((el) => el.id == id);
   document.getElementById("fname").value = value[index].fname;
   document.getElementById("lname").value = value[index].lname;
   document.getElementById("age").value = value[index].age;
   document.getElementById("address").value = value[index].address;
-  //   var editlist = document.getElementById("list");
-  //   editlist.replaceChild(editlist.childNodes[index]);
+  editId = id;
 }
+
 // Clear Input fields
 function clrfrm() {
   document.getElementById("form1").reset();
 }
+
+// Form Validation
 function validate() {
   var fname = document.getElementById("fname");
   var lname = document.getElementById("lname");
@@ -146,3 +157,7 @@ function validate() {
   } else {
   }
 }
+
+// Search Field
+function searchInput() {}
+// Pagination to list items

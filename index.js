@@ -73,7 +73,23 @@ function add() {
   if (editId) {
     let index = value.findIndex((el) => el.id == editId);
     console.log(index);
-    value[index].fname = "Fname";
+    value[index] = b;
+    value[index].id = editId;
+
+    //console.log(document.getElementById("list").childNodes[index].childNodes[0].innerHTML);
+    document.getElementById("list").childNodes[index].childNodes[0].innerHTML =
+      "Firstname-" +
+      b.fname +
+      "<br>" +
+      "Lastname-" +
+      b.lname +
+      "<br>" +
+      "Age-" +
+      b.age +
+      "<br>" +
+      "Address-" +
+      b.address +
+      "<br>";
   } else {
     b.id = value.length + 1;
 
@@ -96,19 +112,16 @@ function add() {
       "Address-" +
       b.address +
       "<br>";
-
     let editbutton = document.createElement("button");
     editbutton.innerText = "Edit";
     editbutton.addEventListener("click", function () {
       editList(b.id);
     });
-
     let deletebutton = document.createElement("button");
     deletebutton.innerText = "Delete";
     deletebutton.addEventListener("click", function () {
       deleteList(b.id);
     });
-
     newElement.appendChild(divEle);
     newElement.appendChild(editbutton);
     newElement.appendChild(deletebutton);
@@ -145,19 +158,16 @@ function clrfrm() {
 
 // Form Validation
 function validate() {
-  var fname = document.getElementById("fname");
-  var lname = document.getElementById("lname");
-  var age = document.getElementById("age");
-  var address = document.getElementById("address");
-
-  if (fname.value == "" || lname.value == "") {
-    alert("Input Field Empty.");
-  } else if (age.value == "" || address.value == "") {
-    alert("Input Field Empty.");
-  } else {
+  if (document.getElementById("fname").value == "") {
+    alert("Enter First Name");
+  } else if (document.getElementById("lname").value == "") {
+    alert("Enter Last Name");
+  } else if (document.getElementById("age").value == "") {
+    alert("Enter Age");
+  } else if (document.getElementById("address").value == "") {
+    alert("Enter Address");
   }
+  return false;
 }
-
 // Search Field
 function searchInput() {}
-// Pagination to list items

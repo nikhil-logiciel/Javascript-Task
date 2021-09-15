@@ -28,9 +28,7 @@ function loadList() {
   value.forEach((item) => {
     var newElement = document.createElement("li");
     newElement.setAttribute("style", "border:1px solid");
-
     var divEle = document.createElement("div");
-
     divEle.setAttribute("id", "0");
     divEle.innerHTML =
       "Firstname-" +
@@ -69,13 +67,11 @@ function add() {
   b["lname"] = document.getElementById("lname").value;
   b["age"] = document.getElementById("age").value;
   b["address"] = document.getElementById("address").value;
-
   if (editId) {
     let index = value.findIndex((el) => el.id == editId);
     console.log(index);
     value[index] = b;
     value[index].id = editId;
-
     //console.log(document.getElementById("list").childNodes[index].childNodes[0].innerHTML);
     document.getElementById("list").childNodes[index].childNodes[0].innerHTML =
       "Firstname-" +
@@ -90,12 +86,11 @@ function add() {
       "Address-" +
       b.address +
       "<br>";
+    editId = null;
   } else {
     b.id = value.length + 1;
-
     value.push(b);
-    console.log(value);
-
+    //console.log(value);
     var newElement = document.createElement("li");
     newElement.setAttribute("style", "border:1px solid");
     var divEle = document.createElement("div");
@@ -134,14 +129,10 @@ function add() {
 function deleteList(id) {
   let index = value.findIndex((el) => el.id == id);
   value.splice(index, 1);
-
   var delList = document.getElementById("list");
   delList.removeChild(delList.childNodes[index]);
 }
-
 // Edit Function
-var selectedListItem = null;
-
 function editList(id) {
   let index = value.findIndex((el) => el.id == id);
   document.getElementById("fname").value = value[index].fname;
@@ -166,8 +157,24 @@ function validate() {
     alert("Enter Age");
   } else if (document.getElementById("address").value == "") {
     alert("Enter Address");
+  } else {
+    add();
   }
-  return false;
 }
 // Search Field
-function searchInput() {}
+function searchInput() {
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("list");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("div")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}

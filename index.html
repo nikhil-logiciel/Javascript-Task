@@ -17,7 +17,16 @@
       placeholder="Search for names.."
       title="Type in a name"
     />
-    <button onClick="searchInput()">Search</button>
+    <button onClick="searchInput()">Search</button><br /><br />
+    <input type="button" id="first" onclick="firstPage()" value="first" />
+    <input type="button" id="next" onclick="nextPage()" value="next" />
+    <input
+      type="button"
+      id="previous"
+      onclick="previousPage()"
+      value="previous"
+    />
+    <input type="button" id="last" onclick="lastPage()" value="last" />
     <ul id="list"></ul>
     <script src="index.js"></script>
   </body>

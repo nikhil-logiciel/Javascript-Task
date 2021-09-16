@@ -1,4 +1,9 @@
 var editId = null;
+//var list = new array();
+//var pageList = new array();
+var currentPage = 1;
+var numberPerPage = 5;
+var numberOfPages = 1;
 var value = [
   {
     address: "Ludhiana",
@@ -19,6 +24,55 @@ var value = [
     age: "20",
     fname: "Sanjay",
     id: 3,
+    lname: "Kumar",
+  },
+  {
+    address: "delhi",
+    age: "20",
+    fname: "Rohan",
+    id: 4,
+    lname: "gupta",
+  },
+  {
+    address: "Chandigarh",
+    age: "25",
+    fname: "Arun",
+    id: 5,
+    lname: "Kumar",
+  },
+  {
+    address: "Jalandhar",
+    age: "20",
+    fname: "Sanjay",
+    id: 6,
+    lname: "Kumar",
+  },
+  {
+    address: "Ludhiana",
+    age: "21",
+    fname: "Ajay",
+    id: 7,
+    lname: "Kumar",
+  },
+  {
+    address: "Moga",
+    age: "24",
+    fname: "Vijay",
+    id: 8,
+    lname: "Kumar",
+  },
+  {
+    address: "Jalandhar",
+    age: "20",
+    fname: "Sanjay",
+    id: 9,
+    lname: "Kumar",
+  },
+  {
+    address: "Jalandhar",
+    age: "20",
+    fname: "Sonu",
+    id: 10,
     lname: "Kumar",
   },
 ];
@@ -161,6 +215,7 @@ function validate() {
     add();
   }
 }
+
 // Search Field
 function searchInput() {
   var input, filter, ul, li, a, i, txtValue;
@@ -171,10 +226,43 @@ function searchInput() {
   for (i = 0; i < li.length; i++) {
     a = li[i].getElementsByTagName("div")[0];
     txtValue = a.textContent || a.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    if (txtValue.toUpperCase().includes(filter)) {
       li[i].style.display = "";
     } else {
       li[i].style.display = "none";
     }
   }
+}
+
+// List Item Pagination
+function load() {
+  makeList();
+  numberOfPages = getNumberOfPages();
+}
+function getNumberOfPages() {
+  return Math.ceil(li.length / numberPerPage);
+}
+function nextPage() {
+  currentPage += 1;
+  loadList();
+}
+function previousPage() {
+  currentPage -= 1;
+  loadList();
+}
+function firstPage() {
+  currentPage = 1;
+  loadList();
+}
+function lastPage() {
+  currentPage = numberOfPages;
+  loadList();
+}
+function loadListItem() {
+  var begin = (currentPage - 1) * numberPerPage;
+  var end = begin + numberPerPage;
+
+  pageList = list.slice(begin, end);
+  drawList(); // draws out our data
+  check(); // determines the states of the pagination buttons
 }

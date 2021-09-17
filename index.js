@@ -1,14 +1,11 @@
 var editId = null;
-//var list = new array();
-//var pageList = new array();
-var currentPage = 1;
-var numberPerPage = 5;
-var numberOfPages = 1;
+var perPage = 3;
+var page = 1;
 var value = [
   {
     address: "Ludhiana",
     age: "21",
-    fname: "Ajay",
+    fname: "AJAY",
     id: 1,
     lname: "Kumar",
   },
@@ -71,7 +68,7 @@ var value = [
   {
     address: "Jalandhar",
     age: "20",
-    fname: "Sonu",
+    fname: "SONU",
     id: 10,
     lname: "Kumar",
   },
@@ -79,7 +76,14 @@ var value = [
 
 // On Load Function for static data
 function loadList() {
-  value.forEach((item) => {
+  var listrender;
+
+  var begin = (page - 1) * perPage;
+  var end = begin + perPage;
+
+  pageList = list.slice(begin, end);
+
+  listrender.forEach((item) => {
     var newElement = document.createElement("li");
     newElement.setAttribute("style", "border:1px solid");
     var divEle = document.createElement("div");
@@ -235,34 +239,27 @@ function searchInput() {
 }
 
 // List Item Pagination
-function load() {
-  makeList();
-  numberOfPages = getNumberOfPages();
-}
-function getNumberOfPages() {
-  return Math.ceil(li.length / numberPerPage);
-}
 function nextPage() {
-  currentPage += 1;
+  page += 1;
   loadList();
 }
 function previousPage() {
-  currentPage -= 1;
+  page -= 1;
   loadList();
 }
-function firstPage() {
-  currentPage = 1;
-  loadList();
-}
-function lastPage() {
-  currentPage = numberOfPages;
-  loadList();
-}
-function loadListItem() {
-  var begin = (currentPage - 1) * numberPerPage;
-  var end = begin + numberPerPage;
+// function loadList() {
+// var begin = (currentPage - 1) * numberPerPage;
+// var end = begin + numberPerPage;
 
-  pageList = list.slice(begin, end);
-  drawList(); // draws out our data
-  check(); // determines the states of the pagination buttons
-}
+// pageList = list.slice(begin, end);
+//   console.log("hello");
+//   drawList(); // draws out our data
+//   check(); // determines the states of the pagination buttons
+// }
+
+// function check() {
+//   document.getElementById("next").disabled =
+//     currentPage == numberOfPages ? true : false;
+//   document.getElementById("previous").disabled =
+//     currentPage == 1 ? true : false;
+// }

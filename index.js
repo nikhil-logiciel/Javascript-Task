@@ -80,9 +80,8 @@ function loadList() {
 
   var begin = (page - 1) * perPage;
   var end = begin + perPage;
-
-  pageList = list.slice(begin, end);
-
+  listrender = value.slice(begin, end);
+  document.getElementById("list").innerHTML = null;
   listrender.forEach((item) => {
     var newElement = document.createElement("li");
     newElement.setAttribute("style", "border:1px solid");
@@ -116,6 +115,7 @@ function loadList() {
     newElement.appendChild(deletebutton);
     document.getElementById("list").appendChild(newElement);
   });
+  check();
 }
 
 // Add function for Input Data to List Item.
@@ -247,19 +247,7 @@ function previousPage() {
   page -= 1;
   loadList();
 }
-// function loadList() {
-// var begin = (currentPage - 1) * numberPerPage;
-// var end = begin + numberPerPage;
-
-// pageList = list.slice(begin, end);
-//   console.log("hello");
-//   drawList(); // draws out our data
-//   check(); // determines the states of the pagination buttons
-// }
-
-// function check() {
-//   document.getElementById("next").disabled =
-//     currentPage == numberOfPages ? true : false;
-//   document.getElementById("previous").disabled =
-//     currentPage == 1 ? true : false;
-// }
+function check() {
+  document.getElementById("previous").disabled = page == 1 ? true : false;
+  document.getElementById("next").disabled = page == perPage ? true : false;
+}

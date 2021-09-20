@@ -185,6 +185,7 @@ function add() {
 
 //Delete function
 function deleteList(id) {
+  console.log(id);
   let index = value.findIndex((el) => el.id == id);
   value.splice(index, 1);
   var delList = document.getElementById("list");
@@ -249,5 +250,5 @@ function previousPage() {
 }
 function check() {
   document.getElementById("previous").disabled = page == 1 ? true : false;
-  document.getElementById("next").disabled = page == perPage ? true : false;
+  document.getElementById("next").disabled = page == 4 ? true : false;
 }

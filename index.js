@@ -115,6 +115,7 @@ function loadList() {
     newElement.appendChild(deletebutton);
     document.getElementById("list").appendChild(newElement);
   });
+  document.getElementById("page").innerText = "Page =" + page;
   check();
 }
 
@@ -131,65 +132,69 @@ function add() {
     value[index] = b;
     value[index].id = editId;
     //console.log(document.getElementById("list").childNodes[index].childNodes[0].innerHTML);
-    document.getElementById("list").childNodes[index].childNodes[0].innerHTML =
-      "Firstname-" +
-      b.fname +
-      "<br>" +
-      "Lastname-" +
-      b.lname +
-      "<br>" +
-      "Age-" +
-      b.age +
-      "<br>" +
-      "Address-" +
-      b.address +
-      "<br>";
+    // document.getElementById("list").childNodes[index].childNodes[0].innerHTML =
+    //   "Firstname-" +
+    //   b.fname +
+    //   "<br>" +
+    //   "Lastname-" +
+    //   b.lname +
+    //   "<br>" +
+    //   "Age-" +
+    //   b.age +
+    //   "<br>" +
+    //   "Address-" +
+    //   b.address +
+    //   "<br>";
     editId = null;
+    loadList();
   } else {
     b.id = value.length + 1;
     value.push(b);
     //console.log(value);
-    var newElement = document.createElement("li");
-    newElement.setAttribute("style", "border:1px solid");
-    var divEle = document.createElement("div");
-    divEle.innerHTML =
-      "Firstname-" +
-      b.fname +
-      "<br>" +
-      "Lastname-" +
-      b.lname +
-      "<br>" +
-      "Age-" +
-      b.age +
-      "<br>" +
-      "Address-" +
-      b.address +
-      "<br>";
-    let editbutton = document.createElement("button");
-    editbutton.innerText = "Edit";
-    editbutton.addEventListener("click", function () {
-      editList(b.id);
-    });
-    let deletebutton = document.createElement("button");
-    deletebutton.innerText = "Delete";
-    deletebutton.addEventListener("click", function () {
-      deleteList(b.id);
-    });
-    newElement.appendChild(divEle);
-    newElement.appendChild(editbutton);
-    newElement.appendChild(deletebutton);
-    document.getElementById("list").appendChild(newElement);
+    if (perPage * page >= value.length) {
+      var newElement = document.createElement("li");
+      newElement.setAttribute("style", "border:1px solid");
+      var divEle = document.createElement("div");
+      divEle.innerHTML =
+        "Firstname-" +
+        b.fname +
+        "<br>" +
+        "Lastname-" +
+        b.lname +
+        "<br>" +
+        "Age-" +
+        b.age +
+        "<br>" +
+        "Address-" +
+        b.address +
+        "<br>";
+      let editbutton = document.createElement("button");
+      editbutton.innerText = "Edit";
+      editbutton.addEventListener("click", function () {
+        editList(b.id);
+      });
+      let deletebutton = document.createElement("button");
+      deletebutton.innerText = "Delete";
+      deletebutton.addEventListener("click", function () {
+        deleteList(b.id);
+      });
+      newElement.appendChild(divEle);
+      newElement.appendChild(editbutton);
+      newElement.appendChild(deletebutton);
+      document.getElementById("list").appendChild(newElement);
+    }
   }
+  loadList();
   document.getElementById("form1").reset();
 }
 
 //Delete function
 function deleteList(id) {
-  console.log(id);
   let index = value.findIndex((el) => el.id == id);
   value.splice(index, 1);
-  var delList = document.getElementById("list");
-  delList.removeChild(delList.childNodes[index]);
+  // var delList = document.getElementById("list");
+  // delList.removeChild(delList.childNodes[index]);
+  loadList();
 }
 // Edit Function
 function editList(id) {
@@ -250,5 +255,6 @@ function previousPage() {
 }
 function check() {
   document.getElementById("previous").disabled = page == 1 ? true : false;
-  document.getElementById("next").disabled = page == 4 ? true : false;
+  document.getElementById("next").disabled =
+    perPage * page < value.length ? false : true;
 }
